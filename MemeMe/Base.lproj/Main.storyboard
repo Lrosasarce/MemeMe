@@ -10,7 +10,7 @@
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Meme1_0" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="MemeMe" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -48,44 +48,54 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <tabBar contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="5xt-30-vcC">
-                                <rect key="frame" x="0.0" y="779" width="414" height="83"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                            <toolbar opaque="NO" clearsContextBeforeDrawing="NO" contentMode="scaleAspectFit" translatesAutoresizingMaskIntoConstraints="NO" id="EJ7-Ud-viO">
+                                <rect key="frame" x="0.0" y="813" width="414" height="49"/>
                                 <items>
-                                    <tabBarItem title="" image="camera.fill" catalog="system" id="CAp-Kk-odc"/>
-                                    <tabBarItem tag="1" title="" image="folder.fill" catalog="system" id="Gme-WU-a3K"/>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="zRc-6Z-1VM"/>
+                                    <barButtonItem title="Item" image="camera.fill" catalog="system" id="WnB-fU-QFN">
+                                        <connections>
+                                            <action selector="cameraOptionPressed:" destination="BYZ-38-t0r" id="Xzf-Gj-spV"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="iE3-O1-eP8"/>
+                                    <barButtonItem title="Library" id="aP2-R2-t0K">
+                                        <connections>
+                                            <action selector="libraryOptionPressed:" destination="BYZ-38-t0r" id="eut-wv-lFH"/>
+                                        </connections>
+                                    </barButtonItem>
+                                    <barButtonItem style="plain" systemItem="flexibleSpace" id="e4J-it-N6F"/>
                                 </items>
-                            </tabBar>
+                            </toolbar>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="dGd-3l-K1E" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="1Sg-Ix-n1R"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="EJ7-Ud-viO" secondAttribute="bottom" id="2EN-GJ-WRQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="L9k-IT-xq2" secondAttribute="trailing" constant="24" id="2cf-TZ-dyh"/>
                             <constraint firstItem="I5j-Wt-4PZ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="5hp-hd-kZs"/>
                             <constraint firstItem="L9k-IT-xq2" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="9QZ-Ik-2ym"/>
+                            <constraint firstItem="EJ7-Ud-viO" firstAttribute="top" secondItem="VyE-35-dAH" secondAttribute="bottom" constant="58" id="C0Y-ob-WcZ"/>
                             <constraint firstItem="I5j-Wt-4PZ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="I9A-OZ-cRC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="dGd-3l-K1E" secondAttribute="leading" id="IGp-xb-28k"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="5xt-30-vcC" secondAttribute="bottom" id="Lrw-2c-zCh"/>
-                            <constraint firstItem="5xt-30-vcC" firstAttribute="trailing" secondItem="6Tk-OE-BBY" secondAttribute="trailing" id="PUM-aV-ZVM"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VyE-35-dAH" secondAttribute="trailing" constant="24" id="ZsS-hk-Pjp"/>
-                            <constraint firstItem="5xt-30-vcC" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" id="hmg-5b-Ivn"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="EJ7-Ud-viO" secondAttribute="leading" id="iB5-Db-Bol"/>
                             <constraint firstItem="L9k-IT-xq2" firstAttribute="top" secondItem="dGd-3l-K1E" secondAttribute="bottom" constant="20" id="lqQ-aF-v47"/>
                             <constraint firstItem="VyE-35-dAH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="pgg-jK-hF9"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="dGd-3l-K1E" secondAttribute="trailing" id="s9s-oP-iOz"/>
+                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="EJ7-Ud-viO" secondAttribute="trailing" id="smh-lg-Qte"/>
                             <constraint firstItem="I5j-Wt-4PZ" firstAttribute="centerY" secondItem="6Tk-OE-BBY" secondAttribute="centerY" id="vUA-B5-ngO"/>
-                            <constraint firstItem="6Tk-OE-BBY" firstAttribute="top" secondItem="dGd-3l-K1E" secondAttribute="top" id="wwl-9Y-gol"/>
-                            <constraint firstItem="5xt-30-vcC" firstAttribute="top" secondItem="VyE-35-dAH" secondAttribute="bottom" constant="24" id="yMk-tI-sgu"/>
                         </constraints>
                     </view>
                     <connections>
                         <outlet property="bottomTextField" destination="VyE-35-dAH" id="9bL-yW-aMc"/>
-                        <outlet property="cameraOption" destination="CAp-Kk-odc" id="eNp-s8-h1m"/>
+                        <outlet property="cameraOption" destination="WnB-fU-QFN" id="WFW-22-ZpJ"/>
                         <outlet property="cancelButton" destination="7W3-GF-C5Z" id="U3E-YK-yAh"/>
                         <outlet property="imagePickerView" destination="I5j-Wt-4PZ" id="44K-7e-Z1r"/>
-                        <outlet property="libraryOption" destination="Gme-WU-a3K" id="lqV-7P-NyT"/>
+                        <outlet property="libraryOption" destination="aP2-R2-t0K" id="Q1O-S7-F1Y"/>
                         <outlet property="navigationBar" destination="dGd-3l-K1E" id="YcS-Uc-73b"/>
                         <outlet property="shareButton" destination="5nu-CK-8qE" id="Y4U-Q5-wxD"/>
-                        <outlet property="tabBar" destination="5xt-30-vcC" id="oxZ-g4-8cX"/>
+                        <outlet property="toolBar" destination="EJ7-Ud-viO" id="dOe-5l-2Gb"/>
                         <outlet property="topTextTextField" destination="L9k-IT-xq2" id="LOS-ed-BbS"/>
                     </connections>
                 </viewController>
@@ -96,7 +106,6 @@
     </scenes>
     <resources>
         <image name="camera.fill" catalog="system" width="128" height="94"/>
-        <image name="folder.fill" catalog="system" width="128" height="97"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
     </resources>
 </document>

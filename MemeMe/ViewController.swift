@@ -16,10 +16,10 @@ class ViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var imagePickerView: UIImageView!
-    @IBOutlet weak var tabBar: UITabBar!
+    @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var navigationBar: UINavigationBar!
-    @IBOutlet weak var cameraOption: UITabBarItem!
-    @IBOutlet weak var libraryOption: UITabBarItem!
+    @IBOutlet weak var cameraOption: UIBarButtonItem!
+    @IBOutlet weak var libraryOption: UIBarButtonItem!
     @IBOutlet weak var topTextTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -53,9 +53,13 @@ class ViewController: UIViewController {
         unsuscribeNotification()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.view.setNeedsLayout()
+    }
+    
     // MARK: - Own methods
     private func initView() {
-        tabBar.delegate = self
         addScreenValues()
         addStyleToElements()
     }
@@ -73,12 +77,20 @@ class ViewController: UIViewController {
         
         imagePickerView.contentMode = .scaleAspectFit
     }
-
+    
+    private func resetScreenConfiguration() {
+        topTextTextField.text = defaultTopText
+        bottomTextField.text = defaultBottomText
+        imagePickerView.image = nil
+        shareButton.isEnabled = false
+    }
+    
     private func addStyleToTextField(_ textField: UITextField) {
         textField.defaultTextAttributes = memeTextAttributes
         textField.delegate = self
         textField.textAlignment = .center
         textField.backgroundColor = .clear
+        textField.autocorrectionType = .no
         textField.autocapitalizationType = .allCharacters
     }
     
@@ -89,14 +101,14 @@ class ViewController: UIViewController {
     }
     
     private func saveImage(_ memedImage: UIImage) {
-        let meme = Meme(topText: topTextTextField.text!, bottomText: self.bottomTextField.text!, image: self.imagePickerView.image!, memedImage: memedImage)
+        let _ = Meme(topText: topTextTextField.text!, bottomText: self.bottomTextField.text!, image: self.imagePickerView.image!, memedImage: memedImage)
     }
     
     // MARK: - Generator
     func generateMemedImage() -> UIImage {
-        
+        // Hide to generate image
         navigationBar.isHidden = true
-        tabBar.isHidden = true
+        toolBar.isHidden = true
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -104,22 +116,26 @@ class ViewController: UIViewController {
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
+        //Show after generate image
         navigationBar.isHidden = false
-        tabBar.isHidden = false
+        toolBar.isHidden = false
 
         return memedImage
     }
     
     // MARK: - Notifications
     @objc func keyboardWillShow(_ notification: Notification) {
-        if bottomTextField.isFirstResponder {
+        if bottomTextField.isFirstResponder && view.frame.origin.y == 0{
             view.frame.origin.y -= getKeyboardHeight(notification)
+            self.viewDidLayoutSubviews()
         }
+        
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        if bottomTextField.isFirstResponder {
-            view.frame.origin.y = 0
+        if view.frame.origin.y < 0 {
+            view.frame.origin.y += getKeyboardHeight(notification)
+            self.viewDidLayoutSubviews()
         }
     }
     
@@ -130,6 +146,7 @@ class ViewController: UIViewController {
     
     private func unsuscribeNotification() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - IBActions
@@ -148,35 +165,21 @@ class ViewController: UIViewController {
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        topTextTextField.text = defaultTopText
-        bottomTextField.text = defaultBottomText
-        imagePickerView.image = nil
+        resetScreenConfiguration()
     }
     
-}
-
-// MARK: - UITabBarDelegate
-extension ViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        let option = TabBarOption(rawValue: item.tag)
-        
-        switch option {
-        case .camera:
-            let imacController = UIImagePickerController()
-            imacController.delegate = self
-            imacController.sourceType = .camera
-            self.present(imacController, animated: true, completion: nil)
-            break
-            
-        case .library:
-            let imacController = UIImagePickerController()
-            imacController.delegate = self
-            imacController.sourceType = .photoLibrary
-            self.present(imacController, animated: true, completion: nil)
-            break
-            
-        case .none: break
-        }
+    @IBAction func cameraOptionPressed(_ sender: UIBarButtonItem) {
+        let imacController = UIImagePickerController()
+        imacController.delegate = self
+        imacController.sourceType = .camera
+        self.present(imacController, animated: true, completion: nil)
+    }
+    
+    @IBAction func libraryOptionPressed(_ sender: UIBarButtonItem) {
+        let imacController = UIImagePickerController()
+        imacController.delegate = self
+        imacController.sourceType = .photoLibrary
+        self.present(imacController, animated: true, completion: nil)
     }
 }
 
@@ -209,16 +212,13 @@ extension ViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == topTextTextField {
-            if textField.text! == defaultTopText {
-                textField.text = ""
-            }
+        
+        if textField == topTextTextField && textField.text! == defaultTopText {
+            textField.text = ""
         }
         
-        if textField == bottomTextField {
-            if textField.text! == defaultBottomText {
-                textField.text = ""
-            }
+        if textField == bottomTextField && textField.text! == defaultBottomText {
+            textField.text = ""
         }
     }
 }
