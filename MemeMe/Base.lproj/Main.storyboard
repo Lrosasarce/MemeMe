@@ -70,6 +70,7 @@
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                         <color key="backgroundColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
+                            <constraint firstItem="dGd-3l-K1E" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="1Sg-Ix-n1R"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="bottom" secondItem="EJ7-Ud-viO" secondAttribute="bottom" id="2EN-GJ-WRQ"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="L9k-IT-xq2" secondAttribute="trailing" constant="24" id="2cf-TZ-dyh"/>
                             <constraint firstItem="I5j-Wt-4PZ" firstAttribute="centerX" secondItem="6Tk-OE-BBY" secondAttribute="centerX" id="5hp-hd-kZs"/>
@@ -78,7 +79,6 @@
                             <constraint firstItem="I5j-Wt-4PZ" firstAttribute="width" secondItem="8bC-Xf-vdC" secondAttribute="width" id="I9A-OZ-cRC"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="dGd-3l-K1E" secondAttribute="leading" id="IGp-xb-28k"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" secondItem="VyE-35-dAH" secondAttribute="trailing" constant="24" id="ZsS-hk-Pjp"/>
-                            <constraint firstItem="dGd-3l-K1E" firstAttribute="top" secondItem="6Tk-OE-BBY" secondAttribute="top" id="eBg-tr-RNV"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="leading" secondItem="EJ7-Ud-viO" secondAttribute="leading" id="iB5-Db-Bol"/>
                             <constraint firstItem="L9k-IT-xq2" firstAttribute="top" secondItem="dGd-3l-K1E" secondAttribute="bottom" constant="20" id="lqQ-aF-v47"/>
                             <constraint firstItem="VyE-35-dAH" firstAttribute="leading" secondItem="6Tk-OE-BBY" secondAttribute="leading" constant="24" id="pgg-jK-hF9"/>

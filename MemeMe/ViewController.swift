@@ -53,6 +53,11 @@ class ViewController: UIViewController {
         unsuscribeNotification()
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.view.setNeedsLayout()
+    }
+    
     // MARK: - Own methods
     private func initView() {
         addScreenValues()
@@ -122,6 +127,7 @@ class ViewController: UIViewController {
     @objc func keyboardWillShow(_ notification: Notification) {
         if bottomTextField.isFirstResponder && view.frame.origin.y == 0{
             view.frame.origin.y -= getKeyboardHeight(notification)
+            self.viewDidLayoutSubviews()
         }
         
     }
@@ -129,6 +135,7 @@ class ViewController: UIViewController {
     @objc func keyboardWillHide(_ notification: Notification) {
         if view.frame.origin.y < 0 {
             view.frame.origin.y += getKeyboardHeight(notification)
+            self.viewDidLayoutSubviews()
         }
     }
     
