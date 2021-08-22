@@ -73,12 +73,20 @@ class ViewController: UIViewController {
         
         imagePickerView.contentMode = .scaleAspectFit
     }
-
+    
+    private func resetScreenConfiguration() {
+        topTextTextField.text = defaultTopText
+        bottomTextField.text = defaultBottomText
+        imagePickerView.image = nil
+        shareButton.isEnabled = false
+    }
+    
     private func addStyleToTextField(_ textField: UITextField) {
         textField.defaultTextAttributes = memeTextAttributes
         textField.delegate = self
         textField.textAlignment = .center
         textField.backgroundColor = .clear
+        textField.autocorrectionType = .no
         textField.autocapitalizationType = .allCharacters
     }
     
@@ -89,12 +97,12 @@ class ViewController: UIViewController {
     }
     
     private func saveImage(_ memedImage: UIImage) {
-        let meme = Meme(topText: topTextTextField.text!, bottomText: self.bottomTextField.text!, image: self.imagePickerView.image!, memedImage: memedImage)
+        let _ = Meme(topText: topTextTextField.text!, bottomText: self.bottomTextField.text!, image: self.imagePickerView.image!, memedImage: memedImage)
     }
     
     // MARK: - Generator
     func generateMemedImage() -> UIImage {
-        
+        // Hide to generate image
         navigationBar.isHidden = true
         tabBar.isHidden = true
         
@@ -104,6 +112,7 @@ class ViewController: UIViewController {
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
+        //Show after generate image
         navigationBar.isHidden = false
         tabBar.isHidden = false
 
@@ -112,14 +121,15 @@ class ViewController: UIViewController {
     
     // MARK: - Notifications
     @objc func keyboardWillShow(_ notification: Notification) {
-        if bottomTextField.isFirstResponder {
+        if bottomTextField.isFirstResponder && view.frame.origin.y == 0{
             view.frame.origin.y -= getKeyboardHeight(notification)
         }
+        
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
-        if bottomTextField.isFirstResponder {
-            view.frame.origin.y = 0
+        if view.frame.origin.y < 0 {
+            view.frame.origin.y += getKeyboardHeight(notification)
         }
     }
     
@@ -130,6 +140,7 @@ class ViewController: UIViewController {
     
     private func unsuscribeNotification() {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
     }
     
     //MARK: - IBActions
@@ -148,9 +159,7 @@ class ViewController: UIViewController {
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
-        topTextTextField.text = defaultTopText
-        bottomTextField.text = defaultBottomText
-        imagePickerView.image = nil
+        resetScreenConfiguration()
     }
     
 }
@@ -209,16 +218,13 @@ extension ViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        if textField == topTextTextField {
-            if textField.text! == defaultTopText {
-                textField.text = ""
-            }
+        
+        if textField == topTextTextField && textField.text! == defaultTopText {
+            textField.text = ""
         }
         
-        if textField == bottomTextField {
-            if textField.text! == defaultBottomText {
-                textField.text = ""
-            }
+        if textField == bottomTextField && textField.text! == defaultBottomText {
+            textField.text = ""
         }
     }
 }
