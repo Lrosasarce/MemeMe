@@ -16,10 +16,10 @@ class ViewController: UIViewController {
 
     // MARK: - IBOutlets
     @IBOutlet weak var imagePickerView: UIImageView!
-    @IBOutlet weak var tabBar: UITabBar!
+    @IBOutlet weak var toolBar: UIToolbar!
     @IBOutlet weak var navigationBar: UINavigationBar!
-    @IBOutlet weak var cameraOption: UITabBarItem!
-    @IBOutlet weak var libraryOption: UITabBarItem!
+    @IBOutlet weak var cameraOption: UIBarButtonItem!
+    @IBOutlet weak var libraryOption: UIBarButtonItem!
     @IBOutlet weak var topTextTextField: UITextField!
     @IBOutlet weak var bottomTextField: UITextField!
     @IBOutlet weak var shareButton: UIBarButtonItem!
@@ -55,7 +55,6 @@ class ViewController: UIViewController {
     
     // MARK: - Own methods
     private func initView() {
-        tabBar.delegate = self
         addScreenValues()
         addStyleToElements()
     }
@@ -104,7 +103,7 @@ class ViewController: UIViewController {
     func generateMemedImage() -> UIImage {
         // Hide to generate image
         navigationBar.isHidden = true
-        tabBar.isHidden = true
+        toolBar.isHidden = true
         
         // Render view to an image
         UIGraphicsBeginImageContext(self.view.frame.size)
@@ -114,7 +113,7 @@ class ViewController: UIViewController {
         
         //Show after generate image
         navigationBar.isHidden = false
-        tabBar.isHidden = false
+        toolBar.isHidden = false
 
         return memedImage
     }
@@ -162,30 +161,18 @@ class ViewController: UIViewController {
         resetScreenConfiguration()
     }
     
-}
-
-// MARK: - UITabBarDelegate
-extension ViewController: UITabBarDelegate {
-    func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
-        let option = TabBarOption(rawValue: item.tag)
-        
-        switch option {
-        case .camera:
-            let imacController = UIImagePickerController()
-            imacController.delegate = self
-            imacController.sourceType = .camera
-            self.present(imacController, animated: true, completion: nil)
-            break
-            
-        case .library:
-            let imacController = UIImagePickerController()
-            imacController.delegate = self
-            imacController.sourceType = .photoLibrary
-            self.present(imacController, animated: true, completion: nil)
-            break
-            
-        case .none: break
-        }
+    @IBAction func cameraOptionPressed(_ sender: UIBarButtonItem) {
+        let imacController = UIImagePickerController()
+        imacController.delegate = self
+        imacController.sourceType = .camera
+        self.present(imacController, animated: true, completion: nil)
+    }
+    
+    @IBAction func libraryOptionPressed(_ sender: UIBarButtonItem) {
+        let imacController = UIImagePickerController()
+        imacController.delegate = self
+        imacController.sourceType = .photoLibrary
+        self.present(imacController, animated: true, completion: nil)
     }
 }
 
