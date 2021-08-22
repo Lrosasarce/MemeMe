@@ -7,11 +7,6 @@
 
 import UIKit
 
-enum TabBarOption: Int {
-    case camera = 0
-    case library = 1
-}
-
 class ViewController: UIViewController {
 
     // MARK: - IBOutlets
@@ -33,7 +28,7 @@ class ViewController: UIViewController {
         .strokeColor: UIColor.black,
         .foregroundColor: UIColor.white,
         .font: UIFont(name: "HelveticaNeue-CondensedBlack", size: 40)!,
-        .strokeWidth: -3.0
+        .strokeWidth: -2.0
     ]
     
     // MARK: - Life cycle
@@ -123,7 +118,6 @@ class ViewController: UIViewController {
         return memedImage
     }
     
-    // MARK: - Notifications
     @objc func keyboardWillShow(_ notification: Notification) {
         if bottomTextField.isFirstResponder && view.frame.origin.y == 0{
             view.frame.origin.y -= getKeyboardHeight(notification)
@@ -134,11 +128,12 @@ class ViewController: UIViewController {
     
     @objc func keyboardWillHide(_ notification: Notification) {
         if view.frame.origin.y < 0 {
-            view.frame.origin.y += getKeyboardHeight(notification)
+            view.frame.origin.y = 0
             self.viewDidLayoutSubviews()
         }
     }
     
+    // MARK: - Notifications
     private func subscribeNotification() {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillShow(_:)), name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillHide(_:)), name: UIResponder.keyboardWillHideNotification, object: nil)
