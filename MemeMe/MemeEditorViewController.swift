@@ -40,6 +40,8 @@ class MemeEditorViewController: UIViewController {
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
         subscribeNotification()
+        
+        //Check if camera is available
         cameraOption.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
     }
     
@@ -50,7 +52,7 @@ class MemeEditorViewController: UIViewController {
     
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        self.view.setNeedsLayout()
+        view.setNeedsLayout()
     }
     
     // MARK: - Own methods
@@ -96,7 +98,14 @@ class MemeEditorViewController: UIViewController {
     }
     
     private func saveImage(_ memedImage: UIImage) {
-        let _ = Meme(topText: topTextTextField.text!, bottomText: self.bottomTextField.text!, image: self.imagePickerView.image!, memedImage: memedImage)
+        let _ = Meme(topText: topTextTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: memedImage)
+    }
+    
+    func pickImage(source: UIImagePickerController.SourceType = .photoLibrary) {
+        let imageController = UIImagePickerController()
+        imageController.delegate = self
+        imageController.sourceType = source
+        present(imageController, animated: true, completion: nil)
     }
     
     // MARK: - Generator
@@ -106,8 +115,8 @@ class MemeEditorViewController: UIViewController {
         toolBar.isHidden = true
         
         // Render view to an image
-        UIGraphicsBeginImageContext(self.view.frame.size)
-        view.drawHierarchy(in: self.view.frame, afterScreenUpdates: true)
+        UIGraphicsBeginImageContext(view.frame.size)
+        view.drawHierarchy(in: view.frame, afterScreenUpdates: true)
         let memedImage:UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
         
@@ -118,18 +127,29 @@ class MemeEditorViewController: UIViewController {
         return memedImage
     }
     
+    private func userDidBeginEditing(_ textField: UITextField) {
+        if textField == topTextTextField && textField.text! == defaultTopText {
+            textField.text = ""
+        
+        } else if textField == bottomTextField && textField.text! == defaultBottomText {
+            textField.text = ""
+        }
+    }
+    
     @objc func keyboardWillShow(_ notification: Notification) {
-        if bottomTextField.isFirstResponder && view.frame.origin.y == 0{
-            view.frame.origin.y -= getKeyboardHeight(notification)
-            self.viewDidLayoutSubviews()
+        // CCheck current position and only apply if bottom TextField is in focus
+        if bottomTextField.isFirstResponder && view.frame.origin.y == 0 {
+            view.frame.origin.y = -getKeyboardHeight(notification)
+            viewDidLayoutSubviews()
         }
         
     }
     
     @objc func keyboardWillHide(_ notification: Notification) {
+        // Check if the view was moved by the keyboard so we move to initial position
         if view.frame.origin.y < 0 {
             view.frame.origin.y = 0
-            self.viewDidLayoutSubviews()
+            viewDidLayoutSubviews()
         }
     }
     
@@ -150,13 +170,14 @@ class MemeEditorViewController: UIViewController {
         let activityViewController = UIActivityViewController(activityItems: [memeImage], applicationActivities: nil)
         activityViewController.completionWithItemsHandler = {
             (activityType, completed, returnedItems, error) in
+            
+            //Save image when is completed
             if completed {
                 self.saveImage(memeImage)
                 self.dismiss(animated: true, completion: nil)
             }
-            
         }
-        self.present(activityViewController, animated: true, completion: nil)
+        present(activityViewController, animated: true, completion: nil)
     }
     
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
@@ -164,17 +185,11 @@ class MemeEditorViewController: UIViewController {
     }
     
     @IBAction func cameraOptionPressed(_ sender: UIBarButtonItem) {
-        let imacController = UIImagePickerController()
-        imacController.delegate = self
-        imacController.sourceType = .camera
-        self.present(imacController, animated: true, completion: nil)
+        pickImage(source: .camera)
     }
     
     @IBAction func libraryOptionPressed(_ sender: UIBarButtonItem) {
-        let imacController = UIImagePickerController()
-        imacController.delegate = self
-        imacController.sourceType = .photoLibrary
-        self.present(imacController, animated: true, completion: nil)
+        pickImage()
     }
 }
 
@@ -187,8 +202,8 @@ extension MemeEditorViewController: UIImagePickerControllerDelegate {
     func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
         
         if let image = info[.originalImage] as? UIImage {
-            self.shareButton.isEnabled = true
-            self.imagePickerView.image = image
+            shareButton.isEnabled = true
+            imagePickerView.image = image
             picker.dismiss(animated: true, completion: nil)
         }
     }
@@ -207,14 +222,7 @@ extension MemeEditorViewController: UITextFieldDelegate {
     }
     
     func textFieldDidBeginEditing(_ textField: UITextField) {
-        
-        if textField == topTextTextField && textField.text! == defaultTopText {
-            textField.text = ""
-        }
-        
-        if textField == bottomTextField && textField.text! == defaultBottomText {
-            textField.text = ""
-        }
+        userDidBeginEditing(textField)
     }
 }
 
