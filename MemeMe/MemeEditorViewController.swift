@@ -108,7 +108,6 @@ class MemeEditorViewController: UIViewController {
         present(imageController, animated: true, completion: nil)
     }
     
-    // MARK: - Generator
     func generateMemedImage() -> UIImage {
         // Hide to generate image
         navigationBar.isHidden = true
