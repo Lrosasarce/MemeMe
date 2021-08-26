@@ -159,8 +159,7 @@ class MemeEditorViewController: UIViewController {
     }
     
     private func unsuscribeNotification() {
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self)
     }
     
     //MARK: - IBActions
@@ -168,7 +167,7 @@ class MemeEditorViewController: UIViewController {
         let memeImage = generateMemedImage()
         let activityViewController = UIActivityViewController(activityItems: [memeImage], applicationActivities: nil)
         activityViewController.completionWithItemsHandler = {
-            (activityType, completed, returnedItems, error) in
+            (_, completed, _, _) in
             
             //Save image when is completed
             if completed {
