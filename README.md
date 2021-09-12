@@ -6,4 +6,5 @@ MemeMe is an app to generate a funny memes from easy way. You need take a photo 
 - Edit top text
 - Edit bottom text
 - Share your meme
+- Show your memes as list or collection
 
