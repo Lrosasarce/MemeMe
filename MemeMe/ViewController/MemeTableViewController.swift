@@ -34,7 +34,7 @@ class MemeTableViewController: UIViewController {
     }
     
     private func addScreenValues() {
-        title = "Sent Memes"
+        navigationItem.title = "Sent Memes"
     }
     
     private func addStyleToElements() {

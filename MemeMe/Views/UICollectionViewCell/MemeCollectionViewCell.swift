@@ -23,7 +23,7 @@ class MemeCollectionViewCell: UICollectionViewCell {
         memeImageView.image = image
     }
     
-    static func getNib() -> UINib? {
+    class func getNib() -> UINib? {
         return UINib(nibName: "MemeCollectionViewCell", bundle: Bundle(for: self))
     }
 }

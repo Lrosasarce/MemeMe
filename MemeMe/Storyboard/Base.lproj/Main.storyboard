@@ -26,11 +26,11 @@
             </objects>
             <point key="canvasLocation" x="-3339" y="276"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="tO2-us-83t">
             <objects>
                 <navigationController id="y3D-zH-n2q" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="Yf2-VB-xVg"/>
+                    <tabBarItem key="tabBarItem" title="" image="column_option" id="Yf2-VB-xVg"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="3J7-Gj-fPx">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -72,11 +72,11 @@
             </objects>
             <point key="canvasLocation" x="-1397" y="556"/>
         </scene>
-        <!--Item-->
+        <!--Navigation Controller-->
         <scene sceneID="Odx-ja-n2j">
             <objects>
                 <navigationController id="xIE-zB-SyP" sceneMemberID="viewController">
-                    <tabBarItem key="tabBarItem" title="Item" id="vNg-Lo-BGz"/>
+                    <tabBarItem key="tabBarItem" title="" image="list_option" id="vNg-Lo-BGz"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="IVF-9g-Q3M">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
@@ -225,6 +225,8 @@
     </scenes>
     <resources>
         <image name="camera.fill" catalog="system" width="128" height="94"/>
+        <image name="column_option" width="30" height="30.5"/>
+        <image name="list_option" width="30" height="30"/>
         <image name="plus" catalog="system" width="128" height="113"/>
         <image name="square.and.arrow.up" catalog="system" width="115" height="128"/>
         <systemColor name="systemBackgroundColor">

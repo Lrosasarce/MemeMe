@@ -16,15 +16,14 @@
                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                 <subviews>
                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="RcX-1f-MWr">
-                        <rect key="frame" x="41" y="53" width="80" height="80"/>
+                        <rect key="frame" x="21" y="33" width="120" height="120"/>
                         <constraints>
-                            <constraint firstAttribute="height" constant="80" id="iXF-OQ-tbD"/>
+                            <constraint firstAttribute="height" constant="120" id="iXF-OQ-tbD"/>
                             <constraint firstAttribute="width" secondItem="RcX-1f-MWr" secondAttribute="height" multiplier="1:1" id="wkW-P3-jhS"/>
                         </constraints>
                     </imageView>
                 </subviews>
             </view>
-            <color key="backgroundColor" red="0.01176470588" green="0.31372549020000001" blue="0.43529411759999997" alpha="1" colorSpace="calibratedRGB"/>
             <constraints>
                 <constraint firstItem="RcX-1f-MWr" firstAttribute="centerX" secondItem="gTV-IL-0wX" secondAttribute="centerX" id="1s6-Gc-XkA"/>
                 <constraint firstItem="RcX-1f-MWr" firstAttribute="centerY" secondItem="gTV-IL-0wX" secondAttribute="centerY" id="vgh-3O-6Jc"/>
