@@ -9,7 +9,10 @@ import UIKit
 
 class MemeCollectionViewController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
     
+    // MARK: - IBOutlets
     @IBOutlet weak var flowLayout: UICollectionViewFlowLayout!
+    
+    // MARK: - Properties
     let spaceItems: CGFloat = 3.0
     
     var memes: [Meme]! {
@@ -18,21 +21,23 @@ class MemeCollectionViewController: UICollectionViewController, UICollectionView
         return appDelegate.memes
     }
 
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         initView()
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
+        
+        // Refresh collection view
         collectionView.reloadData()
     }
     
+    // MARK: - Private methods
     private func initView() {
         addScreenValues()
         configureCollectionView()
-        addStyleToElements()
     }
     
     private func addScreenValues() {
@@ -40,22 +45,23 @@ class MemeCollectionViewController: UICollectionViewController, UICollectionView
     }
     
     private func configureCollectionView() {
-        //Define item space
+        // Define item space
         flowLayout.minimumInteritemSpacing = spaceItems
         flowLayout.minimumLineSpacing = spaceItems
         
+        // Register cell to collection view
         self.collectionView!.register(MemeCollectionViewCell.getNib(), forCellWithReuseIdentifier: MemeCollectionViewCell.cellId)
-        
-        
     }
     
-    private func addStyleToElements() {
-        
+    // MARK: - IBAction
+    @IBAction func newMemePressed(_ sender: UIBarButtonItem) {
+        let destination = MemeEditorViewController.instanceViewController()
+        destination.modalPresentationStyle = .fullScreen
+        present(destination, animated: true, completion: nil)
     }
 
     // MARK: UICollectionViewDataSource
     override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        // #warning Incomplete implementation, return the number of items
         return memes.count
     }
 
@@ -67,8 +73,18 @@ class MemeCollectionViewController: UICollectionViewController, UICollectionView
         return cell
     }
     
+    // MARK: - UICollectionViewDelegateFlowLayout
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let dimension = (view.frame.size.width - (2.0 * spaceItems)) / 3.0
         return CGSize(width: dimension, height: dimension)
     }
+    
+    // MARK: - UICollectionViewDelegate
+    override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        let memedImage = memes[indexPath.row].memedImage
+        let destination = MemeDetailViewController.instanceViewController()
+        destination.memeImage = memedImage
+        navigationController?.pushViewController(destination, animated: true)
+    }
 }
+

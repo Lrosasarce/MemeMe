@@ -9,14 +9,17 @@ import UIKit
 
 class MemeTableViewController: UIViewController {
 
+    // MARK: - IBOulets
     @IBOutlet weak var tableView: UITableView!
     
+    // MARK: - Properties
     var memes: [Meme]! {
         let object = UIApplication.shared.delegate
         let appDelegate = object as! AppDelegate
         return appDelegate.memes
     }
     
+    // MARK: - Life cycle
     override func viewDidLoad() {
         super.viewDidLoad()
         initView()
@@ -27,24 +30,22 @@ class MemeTableViewController: UIViewController {
         tableView.reloadData()
     }
     
+    // MARK: - Private methods
     private func initView() {
         addScreenValues()
         configureTableView()
-        addStyleToElements()
     }
     
     private func addScreenValues() {
         navigationItem.title = "Sent Memes"
     }
     
-    private func addStyleToElements() {
-        
-    }
-    
     private func configureTableView() {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.separatorStyle = .none
+        
+        // Register cell to UITableView
         tableView.register(MemeTableViewCell.getNib(), forCellReuseIdentifier: MemeTableViewCell.cellId)
     }
 
@@ -72,6 +73,13 @@ extension MemeTableViewController: UITableViewDataSource {
 }
 
 extension MemeTableViewController: UITableViewDelegate {
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        let memedImage = memes[indexPath.row].memedImage
+        let destination = MemeDetailViewController.instanceViewController()
+        destination.memeImage = memedImage
+        navigationController?.pushViewController(destination, animated: true)
+    }
+    
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return 200
     }

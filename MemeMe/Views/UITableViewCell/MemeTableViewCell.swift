@@ -34,7 +34,7 @@ class MemeTableViewCell: UITableViewCell {
         memeImageView.image = image
     }
     
-    static func getNib() -> UINib? {
+    class func getNib() -> UINib? {
         return UINib(nibName: "MemeTableViewCell", bundle: Bundle(for: self))
     }
 }

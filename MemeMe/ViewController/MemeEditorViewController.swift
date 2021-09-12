@@ -168,8 +168,8 @@ class MemeEditorViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
-    // Mark: - Static function
-    static func instanceViewController() -> MemeEditorViewController {
+    // MARK: - Static function
+    class func instanceViewController() -> MemeEditorViewController {
         let storyboard = UIStoryboard(name: "Main", bundle: nil)
         guard let viewController = storyboard.instantiateViewController(identifier: "MemeEditorViewController") as? MemeEditorViewController else {
             return MemeEditorViewController()
@@ -193,6 +193,7 @@ class MemeEditorViewController: UIViewController {
         present(activityViewController, animated: true, completion: nil)
     }
     
+    // MARK: - IBAction
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         resetScreenConfiguration()
         dismiss(animated: true, completion: nil)
