@@ -12,4 +12,8 @@ struct Meme {
     let topText, bottomText: String
     let image: UIImage
     let memedImage: UIImage
+    
+    func getFormatName() -> String {
+        return "\(topText)...\(bottomText)"
+    }
 }

@@ -98,7 +98,13 @@ class MemeEditorViewController: UIViewController {
     }
     
     private func saveImage(_ memedImage: UIImage) {
-        let _ = Meme(topText: topTextTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: memedImage)
+        // Create the meme
+        let meme = Meme(topText: topTextTextField.text!, bottomText: bottomTextField.text!, image: imagePickerView.image!, memedImage: memedImage)
+        
+        // Add it to the memes array in the Application Delegate
+        let object = UIApplication.shared.delegate
+        let appDelegate = object as! AppDelegate
+        appDelegate.memes.append(meme)
     }
     
     func pickImage(source: UIImagePickerController.SourceType = .photoLibrary) {
@@ -162,6 +168,15 @@ class MemeEditorViewController: UIViewController {
         NotificationCenter.default.removeObserver(self)
     }
     
+    // MARK: - Static function
+    class func instanceViewController() -> MemeEditorViewController {
+        let storyboard = UIStoryboard(name: "Main", bundle: nil)
+        guard let viewController = storyboard.instantiateViewController(identifier: "MemeEditorViewController") as? MemeEditorViewController else {
+            return MemeEditorViewController()
+        }
+        return viewController
+    }
+    
     //MARK: - IBActions
     @IBAction func shareButtonPressed(_ sender: UIBarButtonItem) {
         let memeImage = generateMemedImage()
@@ -178,8 +193,10 @@ class MemeEditorViewController: UIViewController {
         present(activityViewController, animated: true, completion: nil)
     }
     
+    // MARK: - IBAction
     @IBAction func cancelButtonPressed(_ sender: UIBarButtonItem) {
         resetScreenConfiguration()
+        dismiss(animated: true, completion: nil)
     }
     
     @IBAction func cameraOptionPressed(_ sender: UIBarButtonItem) {
